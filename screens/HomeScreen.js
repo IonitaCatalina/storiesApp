@@ -6,7 +6,6 @@ import {
   Text,
   View,
   Button,
-  AsyncStorage
 } from 'react-native';
 
 import { MonoText } from '../components/StyledText';
@@ -20,7 +19,7 @@ export default function HomeScreen(props) {
       >
         <View style={styles.welcomeContainer}>
           <Button title="I'm done, sign me out" onPress={async () => {
-            await AsyncStorage.clear();
+            props.screenProps.authService.signOut();
             props.navigation.navigate('Auth');
           }} />
         </View>
