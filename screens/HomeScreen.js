@@ -5,45 +5,66 @@ import {
   StyleSheet,
   Text,
   View,
-  Button,
 } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
 import { MonoText } from '../components/StyledText';
 
-export default function HomeScreen(props) {
-  return (
-    <View style={styles.container}>
-      <ScrollView
-        style={styles.container}
-        contentContainerStyle={styles.contentContainer}
-      >
-        <View style={styles.welcomeContainer}>
-          <Button title="I'm done, sign me out" onPress={async () => {
-            props.screenProps.authService.signOut();
-            props.navigation.navigate('Auth');
-          }} />
-        </View>
-      </ScrollView>
+export default class HomeScreen extends React.Component {
+  render () {
+    return (
+      <View style={styles.container}>
+        <ScrollView
+          style={styles.container}
+          contentContainerStyle={styles.contentContainer}
+        >
+          <View style={styles.welcomeContainer}>
 
-      <View style={styles.tabBarInfoContainer}>
-        <Text style={styles.tabBarInfoText}>
-          This is a tab bar. You can edit it in:
-        </Text>
+          </View>
+        </ScrollView>
 
-        <View
-          style={[styles.codeHighlightContainer, styles.navigationFilename]}>
-          <MonoText style={styles.codeHighlightText}>
-            navigation/MainTabNavigator.js
-          </MonoText>
+        <View style={styles.tabBarInfoContainer}>
+          <Text style={styles.tabBarInfoText}>
+            This is a tab bar. You can edit it in:
+          </Text>
+
+          <View
+            style={[styles.codeHighlightContainer, styles.navigationFilename]}>
+            <MonoText style={styles.codeHighlightText}>
+              navigation/MainTabNavigator.js
+            </MonoText>
+          </View>
         </View>
       </View>
-    </View>
-  );
+    );
+  }
 }
 
-HomeScreen.navigationOptions = {
-  header: null,
-};
+const LogoutContainer = (props) => (
+  <View style={styles.logoutContainer}>
+    <Ionicons
+      name='md-log-out'
+      color='#fff'
+      size={32}
+      onPress={async () => {
+        await props.screenProps.authService.signOut();
+        props.navigation.navigate('Auth');
+      }}
+    />
+  </View>
+);
+
+HomeScreen.navigationOptions = (props) => ({
+  headerTitle: 'Home',
+  headerRight: <LogoutContainer {...props}/>,
+  headerStyle: {
+    backgroundColor: '#f76262',
+  },
+  headerTintColor: '#fff',
+  headerTitleStyle: {
+    fontWeight: '400',
+  }
+});
 
 const styles = StyleSheet.create({
   container: {
@@ -90,5 +111,8 @@ const styles = StyleSheet.create({
   },
   navigationFilename: {
     marginTop: 5,
+  },
+  logoutContainer: {
+    paddingHorizontal: 16
   }
 });
