@@ -4,8 +4,17 @@ import MainTabNavigator from './MainTabNavigator';
 
 import {SignInScreen} from '../screens/SignInScreen';
 import {AuthLoadingScreen} from '../screens/AuthLoadingScreen';
+import LoginScreen from '../screens/SignInForm';
 
-const AuthStack = createStackNavigator({ SignIn: SignInScreen });
+const AuthStack = createStackNavigator({
+    SignIn: SignInScreen,
+    SignInForm: LoginScreen
+  }, {
+    cardStyle: {
+      backgroundColor: '#216583',
+    }
+  }
+);
 const AuthLoadingStack = createStackNavigator({AuthLoading: AuthLoadingScreen});
 
 export default createAppContainer(

@@ -20,6 +20,12 @@ export default class AuthService {
     this._token = token;
   }
 
+  async register() {
+    const token = 'abc';
+    await AsyncStorage.setItem('userToken', token);
+    this._token = token;
+  }
+
   async signOut() {
     await AsyncStorage.clear();
     this._token = null;
