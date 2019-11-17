@@ -8,7 +8,7 @@ import { ThemeProvider, Button } from 'react-native-elements';
 export class SignInScreen extends React.Component {
   render() {
     return (
-      <ImageBackground source={require('../assets/images/nori.jpg')} style={{width: '100%', height: '100%'}}>
+      <ImageBackground source={require('../assets/images/nori.png')} style={{width: '100%', height: '100%'}}>
       <>
         <ThemeProvider theme={signInTheme}>
           <Button
