@@ -1,12 +1,13 @@
-import { AppLoading } from 'expo';
-import { Asset } from 'expo-asset';
-import * as Font from 'expo-font';
-import React, { useState } from 'react';
-import { Platform, StatusBar, StyleSheet, View, Text } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { AppLoading } from "expo";
+import { Asset } from "expo-asset";
+import * as Font from "expo-font";
+import React, { useState } from "react";
+import { Platform, StatusBar, StyleSheet, View, Text } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 
-import AppNavigator from './navigation/AppNavigator';
-import AuthService from './AuthService';
+import AppNavigator from "./navigation/AppNavigator";
+import AuthService from "./services/auth";
+import StoriesService from "./services/stories";
 
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
@@ -21,11 +22,12 @@ export default function App(props) {
     );
   } else {
     const authService = new AuthService();
+    const storiesService = new StoriesService();
 
     return (
       <View style={styles.container}>
-        {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-        <AppNavigator screenProps={{authService}} />
+        {Platform.OS === "ios" && <StatusBar barStyle="default" />}
+        <AppNavigator screenProps={{ authService, storiesService }} />
       </View>
     );
   }
@@ -42,8 +44,8 @@ async function loadResourcesAsync() {
       ...Ionicons.font,
       // We include SpaceMono because we use it in HomeScreen.js. Feel free to
       // remove this if you are not using it in your app
-      'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
-    }),
+      "space-mono": require("./assets/fonts/SpaceMono-Regular.ttf")
+    })
   ]);
 }
 
@@ -60,6 +62,6 @@ function handleFinishLoading(setLoadingComplete) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-  },
+    backgroundColor: "#fff"
+  }
 });

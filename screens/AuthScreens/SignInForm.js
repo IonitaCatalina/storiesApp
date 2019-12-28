@@ -1,19 +1,18 @@
 import React from "react";
 import { StyleSheet } from "react-native";
 import { ThemeProvider, Button, Input, Text } from "react-native-elements";
-import { FormIcon } from "../components/FormIcon";
+import { FormIcon } from "../../components/FormIcon";
 
-export default class RegisterScreen extends React.Component {
+export default class LoginScreen extends React.Component {
   state = {
     email: "",
     password: "",
-    confirmPassword: "",
     errorMessage: ""
   };
 
   render() {
     return (
-      <ThemeProvider theme={registerFormTheme}>
+      <ThemeProvider theme={loginFormTheme}>
         <Input
           containerStyle={styles.email}
           inputStyle={styles.input}
@@ -32,21 +31,11 @@ export default class RegisterScreen extends React.Component {
           onChangeText={value => this.onChange("password", value)}
           leftIcon={FormIcon("lock")}
         />
-        <Input
-          containerStyle={styles.confirmPassword}
-          inputStyle={styles.input}
-          placeholder="confirm password"
-          type="password"
-          value={this.state.confirmPassword}
-          secureTextEntry={true}
-          onChangeText={value => this.onChange("confirmPassword", value)}
-          leftIcon={FormIcon("lock")}
-        />
         <Text style={styles.errorMessage}>{this.state.errorMessage}</Text>
         <Button
           containerStyle={styles.signInButton}
-          title="Register"
-          onPress={this.register}
+          title="Sign in"
+          onPress={this.signIn}
           disabled={!!this.state.errorMessage.length}
         />
       </ThemeProvider>
@@ -61,18 +50,14 @@ export default class RegisterScreen extends React.Component {
     this.setState({ [name]: value });
   };
 
-  register = async () => {
+  signIn = async () => {
     if (this.state.email === "" || this.state.password === "") {
       return this.setState({
         errorMessage: `Email/Password field is missing.`
       });
     }
 
-    if (this.state.password !== this.state.confirmPassword) {
-      return this.setState({ errorMessage: "Passwords don't match." });
-    }
-
-    const response = await this.props.screenProps.authService.register(
+    const response = await this.props.screenProps.authService.signIn(
       this.state
     );
 
@@ -84,11 +69,11 @@ export default class RegisterScreen extends React.Component {
   };
 }
 
-RegisterScreen.navigationOptions = {
+LoginScreen.navigationOptions = {
   header: null
 };
 
-const registerFormTheme = {
+const loginFormTheme = {
   colors: {
     primary: "#65c0ba"
   }
@@ -96,7 +81,7 @@ const registerFormTheme = {
 
 const styles = StyleSheet.create({
   signInButton: {
-    top: "36%",
+    top: "33%",
     paddingHorizontal: "10%"
   },
   input: {
@@ -108,12 +93,9 @@ const styles = StyleSheet.create({
   password: {
     top: "28%"
   },
-  confirmPassword: {
-    top: "31%"
-  },
   errorMessage: {
     color: "red",
     paddingLeft: "6%",
-    top: "34%"
+    top: "31%"
   }
 });

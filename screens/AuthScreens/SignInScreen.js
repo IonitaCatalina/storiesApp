@@ -2,13 +2,13 @@ import React from "react";
 import { ImageBackground, StyleSheet, Image } from "react-native";
 import { ThemeProvider, Button } from "react-native-elements";
 
-import { Ionicons } from "@expo/vector-icons";
+// import { Ionicons } from "@expo/vector-icons";
 
 export class SignInScreen extends React.Component {
   render() {
     return (
       <ImageBackground
-        source={require("../assets/images/nori.png")}
+        source={require("../../assets/images/nori.png")}
         style={{ width: "100%", height: "100%" }}
       >
         <ThemeProvider theme={signInTheme}>

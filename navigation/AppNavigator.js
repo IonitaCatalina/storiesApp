@@ -6,10 +6,10 @@ import {
 
 import MainTabNavigator from "./MainTabNavigator";
 
-import { SignInScreen } from "../screens/SignInScreen";
-import { AuthLoadingScreen } from "../screens/AuthLoadingScreen";
-import SignInForm from "../screens/SignInForm";
-import RegisterForm from "../screens/RegisterForm";
+import { SignInScreen } from "../screens/AuthScreens/SignInScreen";
+import { AuthLoadingScreen } from "../screens/AuthScreens/AuthLoadingScreen";
+import SignInForm from "../screens/AuthScreens/SignInForm";
+import RegisterForm from "../screens/AuthScreens/RegisterForm";
 
 const AuthStack = createStackNavigator(
   {
