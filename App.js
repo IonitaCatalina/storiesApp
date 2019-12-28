@@ -2,10 +2,11 @@ import { AppLoading } from 'expo';
 import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
 import React, { useState } from 'react';
-import { Platform, StatusBar, StyleSheet, View } from 'react-native';
+import { Platform, StatusBar, StyleSheet, View, Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 import AppNavigator from './navigation/AppNavigator';
+import AuthService from './AuthService';
 
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
@@ -19,10 +20,12 @@ export default function App(props) {
       />
     );
   } else {
+    const authService = new AuthService();
+
     return (
       <View style={styles.container}>
         {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-        <AppNavigator />
+        <AppNavigator screenProps={{authService}} />
       </View>
     );
   }
@@ -31,8 +34,8 @@ export default function App(props) {
 async function loadResourcesAsync() {
   await Promise.all([
     Asset.loadAsync([
-      require('./assets/images/robot-dev.png'),
-      require('./assets/images/robot-prod.png'),
+      // require('./assets/images/robot-dev.png'),
+      // require('./assets/images/robot-prod.png'),
     ]),
     Font.loadAsync({
       // This is the font that we are using for our tab bar
