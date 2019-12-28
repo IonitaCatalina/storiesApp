@@ -1,33 +1,41 @@
-import {AsyncStorage} from 'react-native';
+import { f, auth, database } from "../config/config.js";
 
 export default class AuthService {
-   constructor () {
-    this._token = null;
-    this.init();
+  isSignedIn() {
+    let isSignedIn = false;
+
+    f.auth().onAuthStateChanged(function(user) {
+      isSignedIn = !!user;
+    });
+
+    return isSignedIn;
   }
 
-  async init () {
-    this._token = await AsyncStorage.getItem('userToken');
-  };
+  async signIn({ email, password }) {
+    try {
+      const response = await auth.signInWithEmailAndPassword(email, password);
 
-  get isSignedIn() {
-    return !!(this._token);
+      return response;
+    } catch (error) {
+      return { error: error.message };
+    }
   }
 
-  async signIn() {
-    const token = 'abc';
-    await AsyncStorage.setItem('userToken', token);
-    this._token = token;
-  }
+  async register({ email, password }) {
+    try {
+      const response = await auth.createUserWithEmailAndPassword(
+        email,
+        password
+      );
 
-  async register() {
-    const token = 'abc';
-    await AsyncStorage.setItem('userToken', token);
-    this._token = token;
+      return response;
+    } catch (error) {
+      return { error: error.message };
+    }
   }
 
   async signOut() {
-    await AsyncStorage.clear();
-    this._token = null;
+    console.log("logged out");
+    auth.signOut();
   }
 }

@@ -1,15 +1,14 @@
-import React from 'react';
-import {
-  ImageBackground,
-  StyleSheet
-} from 'react-native';
-import { ThemeProvider, Button } from 'react-native-elements';
+import React from "react";
+import { ImageBackground, StyleSheet } from "react-native";
+import { ThemeProvider, Button } from "react-native-elements";
 
 export class SignInScreen extends React.Component {
   render() {
     return (
-      <ImageBackground source={require('../assets/images/nori.png')} style={{width: '100%', height: '100%'}}>
-      <>
+      <ImageBackground
+        source={require("../assets/images/nori.png")}
+        style={{ width: "100%", height: "100%" }}
+      >
         <ThemeProvider theme={signInTheme}>
           <Button
             containerStyle={styles.signInContainer}
@@ -17,25 +16,19 @@ export class SignInScreen extends React.Component {
             onPress={this.redirectToSignIn}
           />
         </ThemeProvider>
-        <ThemeProvider theme={registerTheme} >
+        <ThemeProvider theme={registerTheme}>
           <Button
             containerStyle={styles.registerContainer}
-            title="Register" onPress={this.register}
+            title="Register"
+            onPress={this.register}
           />
         </ThemeProvider>
-      </>
       </ImageBackground>
     );
   }
 
-  redirectToSignIn = () => {
-    this.props.navigation.navigate('SignInForm');
-  };
-
-  register = async () => {
-    await this.props.screenProps.authService.register();
-    this.props.navigation.navigate('App');
-  };
+  redirectToSignIn = () => this.props.navigation.navigate("SignInForm");
+  register = async () => this.props.navigation.navigate("RegisterForm");
 }
 
 SignInScreen.navigationOptions = {
@@ -44,29 +37,26 @@ SignInScreen.navigationOptions = {
 
 const signInTheme = {
   colors: {
-    primary: '#216583',
+    primary: "#216583"
   }
-}
+};
 
 const registerTheme = {
   colors: {
-    primary: '#f76262',
+    primary: "#f76262"
   }
-}
+};
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: 'blue'
-  },
   signInContainer: {
-    paddingTop: 200,
-    paddingHorizontal: 30
+    top: "50%",
+    paddingHorizontal: "10%"
   },
   registerContainer: {
-    paddingTop: 10,
-    paddingHorizontal: 30
+    top: "53%",
+    paddingHorizontal: "10%"
   },
   input: {
-    color: 'white'
+    color: "white"
   }
 });
