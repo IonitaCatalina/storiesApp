@@ -1,5 +1,7 @@
 import { f, auth, database } from "../config/config.js";
 
+import * as Facebook from "expo-facebook";
+
 export default class AuthService {
   isSignedIn() {
     let isSignedIn = false;
@@ -31,6 +33,31 @@ export default class AuthService {
       return response;
     } catch (error) {
       return { error: error.message };
+    }
+  }
+
+  async loginWithFacebook() {
+    const appId = "";
+
+    const { type, token } = await Facebook.logInWithReadPermissionsAsync(
+      appId,
+      {
+        permissions: ["public_profile"]
+      }
+    );
+
+    if (type === "success") {
+      try {
+        const credentials = await f.auth.FacebookAuthProvider.crendential(
+          token
+        );
+        const response = await f.auth().signInWithCredential(credentials);
+
+        return response;
+      } catch (err) {
+        console.log(err);
+        return { error: err.message };
+      }
     }
   }
 

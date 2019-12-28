@@ -1,6 +1,8 @@
 import React from "react";
-import { ImageBackground, StyleSheet } from "react-native";
+import { ImageBackground, StyleSheet, Image } from "react-native";
 import { ThemeProvider, Button } from "react-native-elements";
+
+import { Ionicons } from "@expo/vector-icons";
 
 export class SignInScreen extends React.Component {
   render() {
@@ -23,12 +25,29 @@ export class SignInScreen extends React.Component {
             onPress={this.register}
           />
         </ThemeProvider>
+
+        {/* <Ionicons
+          name={"logo-facebook"}
+          size={26}
+          style={{ paddingHorizontal: "46%", top: "58%" }}
+          color={"#3b5998"}
+          onPress={this.continueWithFacebook}
+        /> */}
       </ImageBackground>
     );
   }
 
   redirectToSignIn = () => this.props.navigation.navigate("SignInForm");
-  register = async () => this.props.navigation.navigate("RegisterForm");
+  register = () => this.props.navigation.navigate("RegisterForm");
+
+  continueWithFacebook = async () => {
+    const response = await this.props.screenProps.authService.loginWithFacebook();
+    if (response.error) {
+      return this.setState({ errorMessage: response.error });
+    }
+
+    this.props.navigation.navigate("App");
+  };
 }
 
 SignInScreen.navigationOptions = {
@@ -55,6 +74,9 @@ const styles = StyleSheet.create({
   registerContainer: {
     top: "53%",
     paddingHorizontal: "10%"
+  },
+  facebookContainer: {
+    paddingHorizontal: "40%"
   },
   input: {
     color: "white"
